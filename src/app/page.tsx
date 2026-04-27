@@ -1,11 +1,14 @@
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { unstable_cache } from 'next/cache'
 import { Card } from '@/components/Card'
 import { TrendingUp, Star, Zap } from 'lucide-react'
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
 const getPublishedPosts = unstable_cache(
   async () => {
-    const supabase = await createClient()
     const { data } = await supabase
       .from('posts')
       .select('id, title, slug, featured_image, content_md, published_at')
