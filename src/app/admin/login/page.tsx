@@ -18,8 +18,10 @@ export default function AdminLoginPage() {
     setLoading(true)
     setError('')
 
+    const finalEmail = email.includes('@') ? email : `${email}@neksti.com.br`
+
     const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
+      email: finalEmail,
       password,
     })
 
